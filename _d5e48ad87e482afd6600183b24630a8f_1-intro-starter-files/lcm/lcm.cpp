@@ -1,13 +1,28 @@
 #include <iostream>
 
-long long lcm(int a, int b) {
+uint64_t lcm(uint64_t a,uint64_t b) {
   //write your code here
-  return a*b;
+	//write your code here
+  if(b==0)
+    return a;
+  else
+  {
+    return lcm(b,a%b);
+  }
+
 }
 
 int main() {
-  int a, b;
+  uint64_t a, b;
   std::cin >> a >> b;
-  std::cout << lcm(a, b) << std::endl;
+  if(a<b)
+  {
+    uint64_t temp = 0;
+    temp = a;
+    a = b;
+    b = temp;
+  }
+  uint64_t  c = (a*b)/(lcm(a,b));
+  std::cout << c << std::endl;
   return 0;
 }
