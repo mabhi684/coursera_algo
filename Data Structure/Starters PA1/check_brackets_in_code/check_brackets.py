@@ -2,31 +2,53 @@
 
 import sys
 
+
 class Bracket:
+    """Bracket class.
+    It stores a bracket type which is one of [, (, { and position of the
+    bracket in the string.
+    """
+
     def __init__(self, bracket_type, position):
         self.bracket_type = bracket_type
         self.position = position
 
-    def Match(self, c):
-        if self.bracket_type == '[' and c == ']':
+    def match(self, char):
+        """Matches given character with the bracket's type."""
+
+        if self.bracket_type == '[' and char == ']':
             return True
-        if self.bracket_type == '{' and c == '}':
+        if self.bracket_type == '{' and char == '}':
             return True
-        if self.bracket_type == '(' and c == ')':
+        if self.bracket_type == '(' and char == ')':
             return True
         return False
 
+
+def checker(text):
+    stack = []
+    for index, char in enumerate(text, start=1):
+
+        if char in ("[", "(", "{"):
+            stack.append(Bracket(char, index))
+
+        elif char in ("]", ")", "}"):
+            if not stack:
+                print(stack+"gghhhhh")
+                return index
+
+            top = stack.pop()
+            if not top.match(char):
+                print(stack)
+                return index
+    if stack:
+        top = stack.pop()
+        return top.position
+
+    return "Success"
+
+
 if __name__ == "__main__":
-    text = sys.stdin.read()
-
-    opening_brackets_stack = []
-    for i, next in enumerate(text):
-        if next == '(' or next == '[' or next == '{':
-            # Process opening bracket, write your code here
-            pass
-
-        if next == ')' or next == ']' or next == '}':
-            # Process closing bracket, write your code here
-            pass
-
-    # Printing answer, write your code here
+    #text = sys.stdin.read().strip("\n")
+    text = "{"
+print(checker(text))
